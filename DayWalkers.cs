@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using MelonLoader;
-using UnityEngine.Rendering.PostProcessing;
 
 namespace DayWalkers
 {
