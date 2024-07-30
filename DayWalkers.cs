@@ -40,7 +40,7 @@ namespace DayWalkers
 
             if (camera == null || postProcessVolume == null)
             {
-                LoggerInstance.Msg("Camera or PostProcessVolume not found!");
+                // LoggerInstance.Msg("Camera or PostProcessVolume not found!");
                 return;
             }
 
@@ -70,6 +70,7 @@ namespace DayWalkers
             // Continuously update the skybox exposure based on the Time variable
             if (RenderSettings.skybox != null)
             {
+                Jem.reset_timeOfDay();
                 DisableBloomGlobally();
                 SetExposure(Time);
             }
