@@ -1,4 +1,6 @@
 /*
+MAKE SURE TO DELETE THIS FILE BEFORE BUILDING
+
 public override void OnUpdate()
 {
     // Load the new skybox material
