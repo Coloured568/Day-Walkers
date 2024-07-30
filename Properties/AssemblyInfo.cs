@@ -1,10 +1,11 @@
-﻿using System.Reflection;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using MelonLoader;
 using DayWalkers;
 
-[assembly: MelonInfo(typeof(DayWalkersMod), "Day Walkers", "1.0.0", "Coloured")]
+[assembly: MelonInfo(typeof(DayWalkersMod), "Day Walkers", "2.0.0", "Coloured")]
 [assembly: MelonGame("PLANET JEM SOFTWARE", "NIGHT-RUNNERS PROLOGUE")]
+[assembly: MelonGame("PLANET JEM SOFTWARE", "NIGHT-RUNNERS PROLOGUE PATREON")]
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
