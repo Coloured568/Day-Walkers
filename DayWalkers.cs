@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+using UnityEngine;
 using MelonLoader;
+using UnityEngine.Rendering.PostProcessing;
+using Il2Cpp;
 
 namespace DayWalkers
 {
@@ -9,8 +11,7 @@ namespace DayWalkers
         private readonly float Day = 1.15f;
         private readonly float Night = 0.5f;
 
-        // Variable to hold the current time setting
-        public float Time = 1.25f; // Default to Day
+        public float Time = 1.15f; // Default to Day      
 
         public override void OnInitializeMelon()
         {
@@ -33,6 +34,16 @@ namespace DayWalkers
 
         public override void OnUpdate()
         {
+            var Jem = UnityEngine.Object.FindObjectOfType<GodConstant>();
+            var camera = UnityEngine.Object.FindObjectOfType<Camera>();
+            var postProcessVolume = UnityEngine.Object.FindObjectOfType<PostProcessVolume>();
+
+            if (camera == null || postProcessVolume == null)
+            {
+                LoggerInstance.Msg("Camera or PostProcessVolume not found!");
+                return;
+            }
+
             // Handle PageDown key to set time to Night
             if (Input.GetKeyDown(KeyCode.PageDown))
             {
@@ -44,6 +55,7 @@ namespace DayWalkers
             if (Input.GetKeyDown(KeyCode.PageUp))
             {
                 Time = Dawn;
+                DisableBloomGlobally();
                 LoggerInstance.Msg("Set time to Dawn!");
             }
 
@@ -51,16 +63,31 @@ namespace DayWalkers
             if (Input.GetKeyDown(KeyCode.Delete))
             {
                 Time = Day;
+                DisableBloomGlobally();
                 LoggerInstance.Msg("Set time to Day!");
             }
 
             // Continuously update the skybox exposure based on the Time variable
             if (RenderSettings.skybox != null)
             {
+                DisableBloomGlobally();
                 SetExposure(Time);
             }
         }
 
+        private void DisableBloomGlobally()
+        {
+            var volumes = UnityEngine.Object.FindObjectsOfType<PostProcessVolume>();
+
+            foreach (var volume in volumes)
+            {
+                var bloom = volume.profile.GetSetting<Bloom>();
+                if (bloom != null)
+                {
+                    bloom.enabled.value = false;
+                }
+            }
+        }
         private void SetExposure(float exposure)
         {
             if (RenderSettings.skybox != null)
