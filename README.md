@@ -11,6 +11,8 @@ Next step is to drag and drop the DayWalkers.dll file into the mods folder and y
 |Delete: Day|  |
 |Page Up: Dawn||
 |Page Down: Night|
+|Left Shift: Open the overlay|
+
 
 <kbd>
 <img src="https://github.com/user-attachments/assets/f65040f1-e800-4440-9342-43927c880c2a"></img>
