@@ -42,6 +42,8 @@ namespace DayWalkers
         private static float height;
         private static float width;
 
+        public static bool timeReset = true;
+
         private static Texture2D MakeTex(int width, int height, Color col)
         {
             Color[] pix = new Color[width * height]; for (int i = 0; i < pix.Length; ++i) pix[i] = col;
@@ -51,32 +53,28 @@ namespace DayWalkers
             result.Apply();
             return result;
         }
-        public static void DisplayHud()
-        {
-            var style = new GUIStyle();
-            GUI.BeginGroup(new Rect(10, 2, 340, 25));
-            Header = new GUIStyle(GUI.skin.box);
-            Header.normal.background = MakeTex(2, 2, new Color(1, 1, 1, 1));
-            Header.normal.textColor = Color.black;
-            GUI.Box(new Rect(10, 0, 328, 25), $"▼ Day-Walkers | V3.0.0 | Left Shift to open the overlay.", Header);
-            GUI.EndGroup();
-        }
 
         public static void InitMenu()
         {
             var style = new GUIStyle();
             style.normal.textColor = Color.white;
 
-            DisplayHud(); // Will show even if the menu isn't open	
             if (!showMenu) return;
             // Menu Background Setup
-            GUI.BeginGroup(new Rect(10, 10, 330, 500));
+            GUI.BeginGroup(new Rect(10, 2, 340, 25), style);
+            Header = new GUIStyle(GUI.skin.box);
+            Header.normal.background = MakeTex(2, 2, new Color(1, 1, 1, 1));
+            Header.normal.textColor = Color.black;
+            GUI.Box(new Rect(10, 0, 328, 25), $"▼ Day-Walkers | V3.1.0 | Left Shift to open the overlay.", Header);
+            GUI.EndGroup();
+
+            GUI.BeginGroup(new Rect(10, 15, 339, 500));
             MainBox = new GUIStyle(GUI.skin.box);
             MainBox.normal.background = MakeTex(2, 2, new Color(0.25f, 0.25f, 0.25f, 1.0f));
             GUI.Box(new Rect(10, 12, 330, 500), $"https://patreon.com/nightrunnersgame", MainBox);
             GUI.contentColor = Color.yellow;
             GUI.Label(new Rect(50, 16.5f, 400, 42), $"___________________________________");
-            GUI.contentColor = Color.cyan;
+            GUI.contentColor = Color.white;
             MainTabs = new GUIStyle(GUI.skin.button);
             MainTabs.normal.background = MakeTex(2, 2, new Color(0f, 0f, 1f, 0.75f));
             MainTabs.normal.textColor = Color.black;
@@ -84,7 +82,9 @@ namespace DayWalkers
             Time = GUI.HorizontalSlider(new Rect(100, 40, 100, 30), Time, 0.5f, 1.1f);
             GUI.Box(new Rect(100, 60, 100, 30), $"Exposure: {Time}");
             GUI.Label(new Rect(25, 130, 300, 300), "Note: whenever you update the lightning, it does need a second to load!");
-            GUI.Label(new Rect(50, 180, 275, 200), "Day-walkers was devloped by: Coloured", style);
+            GUI.Label(new Rect(50, 180, 275, 200), "Day-walkers was devloped by: Coloured");
+
+            timeReset = GUI.Toggle(new Rect(100, 220, 100, 30), timeReset, "Lock time");
 
             /* if (GUI.Button(new Rect(20, 40, 60, 27), (selectedTab == 0) ? "► Time" : "Main", MainTabs)) { selectedTab = 0; }
 
@@ -163,9 +163,13 @@ namespace DayWalkers
             // Continuously update the skybox exposure based on the Time variable
             if (RenderSettings.skybox != null)
             {
-                Jem.reset_timeOfDay();
                 DisableBloomGlobally();
                 SetExposure(Time);
+            }
+
+            if (timeReset == true)
+            {
+                Jem.reset_timeOfDay();
             }
         }
 
@@ -196,3 +200,4 @@ namespace DayWalkers
         }
     }
 }
+
