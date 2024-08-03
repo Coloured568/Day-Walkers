@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 using MelonLoader;
 using DayWalkers;
 
-[assembly: MelonInfo(typeof(DayWalkersMod), "Day Walkers", "3.0.0", "Coloured")]
+[assembly: MelonInfo(typeof(DayWalkersMod), "Day Walkers", "3.1.0", "Coloured")]
 [assembly: MelonGame("PLANET JEM SOFTWARE", "NIGHT-RUNNERS PROLOGUE")]
 [assembly: MelonGame("PLANET JEM SOFTWARE", "NIGHT-RUNNERS PROLOGUE PATREON")]
 
